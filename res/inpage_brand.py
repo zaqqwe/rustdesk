@@ -41,3 +41,5 @@ for k, s in {"mdpi": 48, "hdpi": 72, "xhdpi": 96, "xxhdpi": 144, "xxxhdpi": 192}
 open("flutter/assets/icon.svg", "w").write('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#1677ff"/><text x="32" y="38" font-family="Arial, sans-serif" font-weight="700" font-size="15" fill="#fff" text-anchor="middle">InPage</text></svg>')
 print("InPage brand done")
 os.remove(FONT)
+sub("flutter/android/app/src/main/AndroidManifest.xml", 'android:label="RustDesk"', 'android:label="InPage"')
+sub("flutter/android/app/src/main/AndroidManifest.xml", 'android:label="RustDesk Input"', 'android:label="InPage Input"')
