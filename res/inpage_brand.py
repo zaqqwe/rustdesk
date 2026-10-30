@@ -43,3 +43,15 @@ print("InPage brand done")
 os.remove(FONT)
 sub("flutter/android/app/src/main/AndroidManifest.xml", 'android:label="RustDesk"', 'android:label="InPage"')
 sub("flutter/android/app/src/main/AndroidManifest.xml", 'android:label="RustDesk Input"', 'android:label="InPage Input"')
+# ★ 261030 우리 서버 · 숫자 일회용 비밀번호 · 폰 패키지 이름 (못 찾으면 빌드를 멈춤)
+import sys
+def must(path, a, b):
+    s = open(path, encoding="utf-8").read()
+    if a not in s:
+        print("MISSING", path, a); sys.exit(1)
+    open(path, "w", encoding="utf-8").write(s.replace(a, b, 1)); print("must", path)
+C = "libs/hbb_common/src/config.rs"
+must(C, 'pub const RENDEZVOUS_SERVERS: &[&str] = &["rs-ny.rustdesk.com"];', 'pub const RENDEZVOUS_SERVERS: &[&str] = &["13.124.54.46"];')
+must(C, 'pub const RS_PUB_KEY: &str = "OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=";', 'pub const RS_PUB_KEY: &str = "AGNHQh68Q3oJzmavwiFyPIX1Ut6Bh2odni6SSWZEOBQ=";')
+must(C, 'pub static ref DEFAULT_SETTINGS: RwLock<HashMap<String, String>> = Default::default();', 'pub static ref DEFAULT_SETTINGS: RwLock<HashMap<String, String>> = RwLock::new(HashMap::from([("allow-numeric-one-time-password".to_owned(), "Y".to_owned())]));')
+must("flutter/android/app/build.gradle", 'applicationId "com.carriez.flutter_hbb"', 'applicationId "kr.co.inpage.remote"')
